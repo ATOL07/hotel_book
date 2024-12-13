@@ -66,11 +66,12 @@
 // export default router;
 
 
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import { check, validationResult } from "express-validator";
 import User from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import verifyToken from "../middleware/auth";
 
 const router = express.Router();
 
@@ -127,5 +128,10 @@ router.post(
         }
     }
 );
+
+router.get("/validate-token",  (req: Request, res: Response, next: NextFunction) => {
+    verifyToken(req, res, next);
+    res.status(200).send({userId: req.userId});
+});
 
 export default router;

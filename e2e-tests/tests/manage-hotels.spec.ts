@@ -8,8 +8,8 @@ test.beforeEach(async ({ page }) => {
      
     await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible();
     
-      await page.locator("[name=email]").fill("V0N1M@example.com");
-      await page.locator("[name=password]").fill("password123");
+      await page.locator("[name=email]").fill("rahim@gmail,com");
+      await page.locator("[name=password]").fill("333333");
     
       await page.getByRole('button', { name: 'Login' }).click();
       await expect(page.getByText('Signed in successfull!')).toBeVisible();

@@ -1,5 +1,3 @@
-
-
 import express, { Request, Response, NextFunction } from "express";
 import { check, validationResult } from "express-validator";
 import User from "../models/user";
@@ -36,7 +34,7 @@ router.post(
                 } else {
                     // Generate a JWT token
                     const token = jwt.sign(
-                        { userId: user.id },
+                        { userId: user.id, role: user.role },
                         process.env.JWT_SECRET_KEY as string,
                         {
                             expiresIn: "1d", // Set expiration time to 1 day
@@ -60,8 +58,13 @@ router.post(
     }
 );
 
-router.get("/validate-token", verifyToken, (req: Request, res: Response) => {
-    res.status(200).send({ userId: req.userId });
+router.get("/validate-token", verifyToken, async (req: Request, res: Response) => {
+  const user = await User.findById(req.userId);
+  if (!user) {
+       res.status(404).json({ message: "User not found" });
+       return;
+  }
+  res.status(200).json({ userId: user._id, role: user.role });
 });
 
 router.post("/logout", (req: Request, res: Response) => {
@@ -72,4 +75,3 @@ router.post("/logout", (req: Request, res: Response) => {
   });
 
 export default router;
-

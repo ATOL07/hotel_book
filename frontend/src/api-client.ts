@@ -6,7 +6,7 @@ import { BookingFormData } from "./forms/BookingForm/BookingForm";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
-export const fetchCurrentUser = async (): Promise<UserType> => {
+export const fetchCurrentUser = async (): Promise<UserType & { role: string }> => {
   const response = await fetch(`${API_BASE_URL}/api/users/me`, {
     credentials: "include",
   });
@@ -15,6 +15,7 @@ export const fetchCurrentUser = async (): Promise<UserType> => {
   }
   return response.json();
 };
+
 
 
 export const register = async (formData: RegisterFormData) => {
@@ -59,7 +60,6 @@ export const signIn = async (formData: SignInFormData) => {
       throw error;
     }
   };
-  
 
 export const validateToken = async () => {
     const response = await fetch(`${API_BASE_URL}/api/auth/validate-token`, {

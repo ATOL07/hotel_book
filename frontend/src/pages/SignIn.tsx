@@ -35,6 +35,7 @@ const SignIn = () => {
 
   const onSubmit = handleSubmit((data) => {
     mutation.mutate(data);
+    console.log("Form Data Sent to API:", data);
   });
 
   return (

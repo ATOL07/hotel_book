@@ -1,10 +1,7 @@
-
 import express, { Request, Response } from "express";
 import User from "../models/user";
-import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { check, validationResult } from "express-validator";
-import { verify } from "crypto";
 import verifyToken from "../middleware/auth";
 
 const router = express.Router();
@@ -50,23 +47,20 @@ router.post(
                  res.status(400).json({ message: "User already exists" });
             }
 
-            // Hash the password before saving
-            const salt = await bcrypt.genSalt(10);
-            const hashedPassword = await bcrypt.hash(password, salt);
-
             // Create a new user if not found
             user = new User({
                 firstName,
                 lastName,
                 email: email.toLowerCase(),
-                password: hashedPassword,
+                password,
+                // password: hashedPassword,
             });
 
             await user.save();
 
             // Generate a JWT token
             const token = jwt.sign(
-                { userId: user.id },
+                { userId: user.id, role: user.role },
                 process.env.JWT_SECRET_KEY as string,
                 {
                     expiresIn: "1d", // Set expiration time to 1 day
@@ -89,5 +83,3 @@ router.post(
 );
 
 export default router;
-
-

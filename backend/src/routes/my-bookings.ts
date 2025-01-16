@@ -5,17 +5,29 @@ import { HotelType } from "../shared/types";
 
 const router = express.Router();
 
-// /api/my-bookings
 router.get("/", verifyToken, async (req: Request, res: Response) => {
   try {
-    const hotels = await Hotel.find({
-      bookings: { $elemMatch: { userId: req.userId } },
-    });
+    let hotels;
+
+    if (req.role === "admin") {
+      // Admin can view all bookings
+      hotels = await Hotel.find({});
+    } else {
+      // Non-admin users can only view their own bookings
+      hotels = await Hotel.find({
+        bookings: { $elemMatch: { userId: req.userId } },
+      });
+    }
 
     const results = hotels.map((hotel) => {
-      const userBookings = hotel.bookings.filter(
-        (booking) => booking.userId === req.userId
-      );
+      let userBookings = hotel.bookings;
+
+      if (req.role !== "admin") {
+        // Filter the bookings if the user is not an admin
+        userBookings = hotel.bookings.filter(
+          (booking) => booking.userId === req.userId
+        );
+      }
 
       const hotelWithUserBookings: HotelType = {
         ...hotel.toObject(),
@@ -31,6 +43,8 @@ router.get("/", verifyToken, async (req: Request, res: Response) => {
     res.status(500).json({ message: "Unable to fetch bookings" });
   }
 });
+
+
 
 export default router;
 

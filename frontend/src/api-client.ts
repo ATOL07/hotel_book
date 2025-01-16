@@ -4,6 +4,7 @@ import { HotelSearchResponse, HotelType, PaymentIntentResponse, UserType } from 
 import { BookingFormData } from "./forms/BookingForm/BookingForm";
 
 
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 export const fetchCurrentUser = async (): Promise<UserType & { role: string }> => {
@@ -208,6 +209,36 @@ export const fetchHotelById = async (hotelId: string): Promise<HotelType> => {
 
   return response.json();
 };
+
+
+
+export const deleteMyHotelById = async (hotelId: string) => {
+  try {
+    // const token = localStorage.getItem("token"); // Assuming the token is stored in localStorage
+    const response = await fetch(`${API_BASE_URL}/api/my-hotels/${hotelId}`, {
+      method: "DELETE", 
+      credentials: 'include'
+      // headers: {
+      //   "Content-Type": "application/json",
+      //   "Authorization": `Bearer ${token}`, // Include token in headers
+      // },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to delete hotel");
+    }
+
+    return response.json(); 
+  } catch (error) {
+    console.error("Error deleting hotel:", error);
+    throw new Error("Error deleting hotel");
+  }
+};
+
+
+
+
+
 
 
 export const createPaymentIntent = async (

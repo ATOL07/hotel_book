@@ -18,7 +18,30 @@ const upload = multer({
     }
 })
 
-// api/my/hotels
+// Delete hotel by ID
+router.delete("/:hotelId", verifyToken, async (req: Request, res: Response) => {
+  const { hotelId } = req.params;
+  console.log("Deleting hotel ID:", hotelId);  // Log for debugging
+  console.log("User ID from token:", req.userId);  // Log for debugging
+
+  try {
+    // Find the hotel by ID and ensure it belongs to the logged-in user
+    const hotel = await Hotel.findOne({ _id: hotelId, userId: req.userId });
+
+    if (!hotel) {
+      res.status(404).json({ message: "Hotel not found or unauthorized" });
+      return; // Ensure TypeScript understands the function will stop here
+    }
+
+    // Delete the hotel
+    await Hotel.deleteOne({ _id: hotelId });
+
+    res.status(200).json({ message: "Hotel deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting hotel:", error);
+    res.status(500).json({ message: "Error deleting hotel" });
+  }
+});
 
 router.post("/", 
     verifyToken,[

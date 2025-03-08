@@ -6,7 +6,7 @@ const Header = () => {
   const { isLoggedIn, isAdmin } = useAppContext();
 
   return (
-    <div className="bg-blue-800 py-6">
+    <div className="bg-neutral-700 py-6">
       <div className="container mx-auto flex justify-between items-center">
         {/* Website Logo */}
         <span className="text-4xl font-extrabold tracking-wide">
@@ -14,7 +14,7 @@ const Header = () => {
             to="/"
             className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-transparent bg-clip-text hover:text-white transition-colors duration-300 ease-in-out font-sans"
           >
-            BookYourHolidays.com
+            CheckInnPro
           </Link>
         </span>
 

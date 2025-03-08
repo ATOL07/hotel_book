@@ -123,7 +123,7 @@ const BookingForm = ({ currentUser, paymentIntent }: Props)=>{
             <h2 className="text-2xl font-bold">Your Price Summary</h2>
             <div className="bg-blue-200 p-4 rounded-md" >
             <div className="font-semibold test-lg">
-            Total Cost: £{paymentIntent.totalCost.toFixed(2)}
+            Total Cost: <span className="text-2xl px-0.5">৳</span>{paymentIntent.totalCost.toFixed(2)}
             </div>
             <div className="text-xs">Inlcudes taxes and Charges</div>
            </div>

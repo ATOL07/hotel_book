@@ -16,6 +16,7 @@ import Detail from "./pages/Detail";
 import Booking from "./pages/Booking";
 import MyBookings from "./pages/MyBookings";
 import Home from "./pages/Home";
+import UserList from './pages/UserList'
 
 
 
@@ -92,6 +93,12 @@ const App = () => {
         <Route path="/my-bookings" element={
           <Layout>
             <MyBookings />
+          </Layout>
+        }  /> 
+
+<Route path="/users" element={
+          <Layout>
+            <UserList />
           </Layout>
         }  /> 
 

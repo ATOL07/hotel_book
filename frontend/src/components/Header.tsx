@@ -40,6 +40,15 @@ const Header = () => {
                 </Link>
               )}
 
+              {isAdmin && (
+                <Link
+                  to="/users"
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 px-3 py-2 text-lg font-sans font-bold hover:text-white transition-colors duration-300"
+                >
+                  User List
+                </Link>
+              )}
+
               {/* Sign Out Button */}
               <SignOutButton />
             </>

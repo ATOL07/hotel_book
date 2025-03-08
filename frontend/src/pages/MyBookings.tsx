@@ -42,6 +42,9 @@ const MyBookings = () => {
                   <span className="font-bold mr-2">Guests:</span>
                   <span>
                     {booking.adultCount} adults, {booking.childCount} children
+                    {booking.firstName && (
+                      <b><span> <br />Booked By  - {booking.firstName} {booking.lastName}</span></b>
+                    )}
                   </span>
                 </div>
               </div>

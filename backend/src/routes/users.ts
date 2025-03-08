@@ -82,4 +82,17 @@ router.post(
     }
 );
 
+
+router.get("/", verifyToken, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const users = await User.find({role: "user"});
+        res.json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Internal Server Error",
+        })
+    }
+})
+
 export default router;

@@ -293,3 +293,21 @@ export const fetchMyBookings = async (): Promise<HotelType[]> => {
 
   return response.json();
 };
+
+
+
+
+export const fetchUsers = async (): Promise<any[]> => {
+  const response = await fetch(`${API_BASE_URL}/api/users`, {
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Error fetching hotels");
+  }
+
+  const users = response.json();
+
+  console.log("Fetch", users)
+  return users;
+};
